@@ -6,13 +6,13 @@
 
             <div class="card">
                 <div class="card-header">
-                    {{ trans('global.show') }} {{ trans('cruds.email.title') }}
+                    {{ trans('global.show') }} {{ trans('cruds.schedule.title') }}
                 </div>
 
                 <div class="card-body">
                     <div class="form-group">
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('frontend.emails.index') }}">
+                            <a class="btn btn-default" href="{{ route('frontend.schedules.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>
@@ -20,56 +20,48 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.email.fields.id') }}
+                                        {{ trans('cruds.schedule.fields.id') }}
                                     </th>
                                     <td>
-                                        {{ $email->id }}
+                                        {{ $schedule->id }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.email.fields.subject') }}
+                                        {{ trans('cruds.schedule.fields.session') }}
                                     </th>
                                     <td>
-                                        {{ $email->subject }}
+                                        {{ $schedule->session->title ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.email.fields.body') }}
+                                        {{ trans('cruds.schedule.fields.date') }}
                                     </th>
                                     <td>
-                                        {!! $email->body !!}
+                                        {{ $schedule->date }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.email.fields.session') }}
+                                        {{ trans('cruds.schedule.fields.time') }}
                                     </th>
                                     <td>
-                                        {{ $email->session->title ?? '' }}
+                                        {{ $schedule->time }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.email.fields.ordering') }}
+                                        {{ trans('cruds.schedule.fields.status') }}
                                     </th>
                                     <td>
-                                        {{ $email->ordering }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.email.fields.landing_page') }}
-                                    </th>
-                                    <td>
-                                        {{ $email->landing_page->name ?? '' }}
+                                        {{ App\Models\Schedule::STATUS_RADIO[$schedule->status] ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('frontend.emails.index') }}">
+                            <a class="btn btn-default" href="{{ route('frontend.schedules.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>

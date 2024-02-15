@@ -102,6 +102,36 @@
                 <span class="help-block">{{ trans('cruds.session.fields.time_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required">{{ trans('cruds.session.fields.cadence') }}</label>
+                <select class="form-control {{ $errors->has('cadence') ? 'is-invalid' : '' }}" name="cadence" id="cadence" required>
+                    <option value disabled {{ old('cadence', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\Session::CADENCE_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('cadence', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('cadence'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('cadence') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.session.fields.cadence_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required">{{ trans('cruds.session.fields.frequency') }}</label>
+                <select class="form-control {{ $errors->has('frequency') ? 'is-invalid' : '' }}" name="frequency" id="frequency" required>
+                    <option value disabled {{ old('frequency', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\Session::FREQUENCY_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('frequency', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('frequency'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('frequency') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.session.fields.frequency_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="duration">{{ trans('cruds.session.fields.duration') }}</label>
                 <input class="form-control {{ $errors->has('duration') ? 'is-invalid' : '' }}" type="number" name="duration" id="duration" value="{{ old('duration', '') }}" step="1">
                 @if($errors->has('duration'))
@@ -135,6 +165,20 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.session.fields.next_session_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="landing_page_id">{{ trans('cruds.session.fields.landing_page') }}</label>
+                <select class="form-control select2 {{ $errors->has('landing_page') ? 'is-invalid' : '' }}" name="landing_page_id" id="landing_page_id" required>
+                    @foreach($landing_pages as $id => $entry)
+                        <option value="{{ $id }}" {{ old('landing_page_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('landing_page'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('landing_page') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.session.fields.landing_page_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

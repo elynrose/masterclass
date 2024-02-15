@@ -35,6 +35,12 @@ class UpdateSessionRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.time_format'),
             ],
+            'cadence' => [
+                'required',
+            ],
+            'frequency' => [
+                'required',
+            ],
             'duration' => [
                 'nullable',
                 'integer',
@@ -43,6 +49,10 @@ class UpdateSessionRequest extends FormRequest
             ],
             'attachment' => [
                 'array',
+            ],
+            'landing_page_id' => [
+                'required',
+                'integer',
             ],
         ];
     }

@@ -17,6 +17,8 @@ class CreateSessionsTable extends Migration
             $table->longText('zoom_link');
             $table->date('date');
             $table->time('time');
+            $table->string('cadence');
+            $table->string('frequency');
             $table->integer('duration')->nullable();
             $table->timestamps();
             $table->softDeletes();

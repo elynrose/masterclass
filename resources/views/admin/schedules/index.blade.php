@@ -1,44 +1,38 @@
 @extends('layouts.admin')
 @section('content')
-@can('session_create')
+@can('schedule_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.sessions.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.session.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.schedules.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.schedule.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.session.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.schedule.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Session">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Schedule">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.session.fields.title') }}
+                            {{ trans('cruds.schedule.fields.session') }}
                         </th>
                         <th>
-                            {{ trans('cruds.session.fields.intro_video') }}
+                            {{ trans('cruds.schedule.fields.date') }}
                         </th>
                         <th>
-                            {{ trans('cruds.session.fields.date') }}
+                            {{ trans('cruds.schedule.fields.time') }}
                         </th>
                         <th>
-                            {{ trans('cruds.session.fields.time') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.session.fields.cadence') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.session.fields.frequency') }}
+                            {{ trans('cruds.schedule.fields.status') }}
                         </th>
                         <th>
                             &nbsp;
@@ -46,48 +40,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($sessions as $key => $session)
-                        <tr data-entry-id="{{ $session->id }}">
+                    @foreach($schedules as $key => $schedule)
+                        <tr data-entry-id="{{ $schedule->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $session->title ?? '' }}
+                                {{ $schedule->session->title ?? '' }}
                             </td>
                             <td>
-                                @if($session->intro_video)
-                                    <a href="{{ $session->intro_video->getUrl() }}" target="_blank">
-                                        {{ trans('global.view_file') }}
-                                    </a>
-                                @endif
+                                {{ $schedule->date ?? '' }}
                             </td>
                             <td>
-                                {{ $session->date ?? '' }}
+                                {{ $schedule->time ?? '' }}
                             </td>
                             <td>
-                                {{ $session->time ?? '' }}
+                                {{ App\Models\Schedule::STATUS_RADIO[$schedule->status] ?? '' }}
                             </td>
                             <td>
-                                {{ App\Models\Session::CADENCE_SELECT[$session->cadence] ?? '' }}
-                            </td>
-                            <td>
-                                {{ App\Models\Session::FREQUENCY_SELECT[$session->frequency] ?? '' }}
-                            </td>
-                            <td>
-                                @can('session_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.sessions.show', $session->id) }}">
+                                @can('schedule_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.schedules.show', $schedule->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('session_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.sessions.edit', $session->id) }}">
+                                @can('schedule_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.schedules.edit', $schedule->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('session_delete')
-                                    <form action="{{ route('admin.sessions.destroy', $session->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('schedule_delete')
+                                    <form action="{{ route('admin.schedules.destroy', $schedule->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -112,11 +96,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('session_delete')
+@can('schedule_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.sessions.massDestroy') }}",
+    url: "{{ route('admin.schedules.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -147,7 +131,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  let table = $('.datatable-Session:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Schedule:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

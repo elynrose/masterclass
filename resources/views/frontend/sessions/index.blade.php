@@ -35,6 +35,12 @@
                                         {{ trans('cruds.session.fields.time') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.session.fields.cadence') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.session.fields.frequency') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -57,6 +63,12 @@
                                         </td>
                                         <td>
                                             {{ $session->time ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ App\Models\Session::CADENCE_SELECT[$session->cadence] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ App\Models\Session::FREQUENCY_SELECT[$session->frequency] ?? '' }}
                                         </td>
                                         <td>
                                             @can('session_show')

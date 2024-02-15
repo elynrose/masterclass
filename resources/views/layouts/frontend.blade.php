@@ -112,6 +112,11 @@
                                             {{ trans('cruds.session.title') }}
                                         </a>
                                     @endcan
+                                    @can('schedule_access')
+                                        <a class="dropdown-item" href="{{ route('frontend.schedules.index') }}">
+                                            {{ trans('cruds.schedule.title') }}
+                                        </a>
+                                    @endcan
                                     @can('attendee_access')
                                         <a class="dropdown-item" href="{{ route('frontend.attendees.index') }}">
                                             {{ trans('cruds.attendee.title') }}

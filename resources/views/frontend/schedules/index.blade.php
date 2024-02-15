@@ -3,36 +3,36 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @can('email_create')
+            @can('schedule_create')
                 <div style="margin-bottom: 10px;" class="row">
                     <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.emails.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.email.title_singular') }}
+                        <a class="btn btn-success" href="{{ route('frontend.schedules.create') }}">
+                            {{ trans('global.add') }} {{ trans('cruds.schedule.title_singular') }}
                         </a>
                     </div>
                 </div>
             @endcan
             <div class="card">
                 <div class="card-header">
-                    {{ trans('cruds.email.title_singular') }} {{ trans('global.list') }}
+                    {{ trans('cruds.schedule.title_singular') }} {{ trans('global.list') }}
                 </div>
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-Email">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-Schedule">
                             <thead>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.email.fields.subject') }}
+                                        {{ trans('cruds.schedule.fields.session') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.email.fields.session') }}
+                                        {{ trans('cruds.schedule.fields.date') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.email.fields.ordering') }}
+                                        {{ trans('cruds.schedule.fields.time') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.email.fields.landing_page') }}
+                                        {{ trans('cruds.schedule.fields.status') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -40,35 +40,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($emails as $key => $email)
-                                    <tr data-entry-id="{{ $email->id }}">
+                                @foreach($schedules as $key => $schedule)
+                                    <tr data-entry-id="{{ $schedule->id }}">
                                         <td>
-                                            {{ $email->subject ?? '' }}
+                                            {{ $schedule->session->title ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $email->session->title ?? '' }}
+                                            {{ $schedule->date ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $email->ordering ?? '' }}
+                                            {{ $schedule->time ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $email->landing_page->name ?? '' }}
+                                            {{ App\Models\Schedule::STATUS_RADIO[$schedule->status] ?? '' }}
                                         </td>
                                         <td>
-                                            @can('email_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.emails.show', $email->id) }}">
+                                            @can('schedule_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.schedules.show', $schedule->id) }}">
                                                     {{ trans('global.view') }}
                                                 </a>
                                             @endcan
 
-                                            @can('email_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.emails.edit', $email->id) }}">
+                                            @can('schedule_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.schedules.edit', $schedule->id) }}">
                                                     {{ trans('global.edit') }}
                                                 </a>
                                             @endcan
 
-                                            @can('email_delete')
-                                                <form action="{{ route('frontend.emails.destroy', $email->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                            @can('schedule_delete')
+                                                <form action="{{ route('frontend.schedules.destroy', $schedule->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -94,11 +94,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('email_delete')
+@can('schedule_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('frontend.emails.massDestroy') }}",
+    url: "{{ route('frontend.schedules.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -129,7 +129,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  let table = $('.datatable-Email:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Schedule:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

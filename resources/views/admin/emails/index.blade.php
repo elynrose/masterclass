@@ -32,6 +32,9 @@
                             {{ trans('cruds.email.fields.ordering') }}
                         </th>
                         <th>
+                            {{ trans('cruds.email.fields.landing_page') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -50,6 +53,9 @@
                             </td>
                             <td>
                                 {{ $email->ordering ?? '' }}
+                            </td>
+                            <td>
+                                {{ $email->landing_page->name ?? '' }}
                             </td>
                             <td>
                                 @can('email_show')

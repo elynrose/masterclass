@@ -100,6 +100,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.session.fields.cadence') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Models\Session::CADENCE_SELECT[$session->cadence] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.session.fields.frequency') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Models\Session::FREQUENCY_SELECT[$session->frequency] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.session.fields.duration') }}
                                     </th>
                                     <td>
@@ -124,6 +140,14 @@
                                     </th>
                                     <td>
                                         {{ $session->next_session->title ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.session.fields.landing_page') }}
+                                    </th>
+                                    <td>
+                                        {{ $session->landing_page->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

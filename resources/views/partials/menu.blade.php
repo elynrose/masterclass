@@ -87,6 +87,16 @@
                 </a>
             </li>
         @endcan
+        @can('schedule_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.schedules.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/schedules") || request()->is("admin/schedules/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-calendar-alt c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.schedule.title') }}
+                </a>
+            </li>
+        @endcan
         @can('attendee_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.attendees.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/attendees") || request()->is("admin/attendees/*") ? "c-active" : "" }}">

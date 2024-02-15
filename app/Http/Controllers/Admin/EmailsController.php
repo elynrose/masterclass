@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyEmailRequest;
 use App\Http\Requests\StoreEmailRequest;
 use App\Http\Requests\UpdateEmailRequest;
 use App\Models\Email;
+use App\Models\LandingPage;
 use App\Models\Session;
 use Gate;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class EmailsController extends Controller
     {
         abort_if(Gate::denies('email_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $emails = Email::with(['session', 'created_by'])->get();
+        $emails = Email::with(['session', 'landing_page', 'created_by'])->get();
 
         return view('admin.emails.index', compact('emails'));
     }
@@ -33,7 +34,9 @@ class EmailsController extends Controller
 
         $sessions = Session::pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.emails.create', compact('sessions'));
+        $landing_pages = LandingPage::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.emails.create', compact('landing_pages', 'sessions'));
     }
 
     public function store(StoreEmailRequest $request)
@@ -53,9 +56,11 @@ class EmailsController extends Controller
 
         $sessions = Session::pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $email->load('session', 'created_by');
+        $landing_pages = LandingPage::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.emails.edit', compact('email', 'sessions'));
+        $email->load('session', 'landing_page', 'created_by');
+
+        return view('admin.emails.edit', compact('email', 'landing_pages', 'sessions'));
     }
 
     public function update(UpdateEmailRequest $request, Email $email)
@@ -69,7 +74,7 @@ class EmailsController extends Controller
     {
         abort_if(Gate::denies('email_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $email->load('session', 'created_by');
+        $email->load('session', 'landing_page', 'created_by');
 
         return view('admin.emails.show', compact('email'));
     }

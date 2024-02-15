@@ -55,6 +55,20 @@
                 <span class="help-block">{{ trans('cruds.email.fields.ordering_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="landing_page_id">{{ trans('cruds.email.fields.landing_page') }}</label>
+                <select class="form-control select2 {{ $errors->has('landing_page') ? 'is-invalid' : '' }}" name="landing_page_id" id="landing_page_id" required>
+                    @foreach($landing_pages as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('landing_page_id') ? old('landing_page_id') : $email->landing_page->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('landing_page'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('landing_page') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.email.fields.landing_page_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroySessionRequest;
 use App\Http\Requests\StoreSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
+use App\Models\LandingPage;
 use App\Models\Session;
 use Gate;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class SessionsController extends Controller
     {
         abort_if(Gate::denies('session_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sessions = Session::with(['next_session', 'media'])->get();
+        $sessions = Session::with(['next_session', 'landing_page', 'media'])->get();
 
         return view('frontend.sessions.index', compact('sessions'));
     }
@@ -32,7 +33,9 @@ class SessionsController extends Controller
 
         $next_sessions = Session::pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.sessions.create', compact('next_sessions'));
+        $landing_pages = LandingPage::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.sessions.create', compact('landing_pages', 'next_sessions'));
     }
 
     public function store(StoreSessionRequest $request)
@@ -64,9 +67,11 @@ class SessionsController extends Controller
 
         $next_sessions = Session::pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $session->load('next_session');
+        $landing_pages = LandingPage::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.sessions.edit', compact('next_sessions', 'session'));
+        $session->load('next_session', 'landing_page');
+
+        return view('frontend.sessions.edit', compact('landing_pages', 'next_sessions', 'session'));
     }
 
     public function update(UpdateSessionRequest $request, Session $session)
@@ -116,7 +121,7 @@ class SessionsController extends Controller
     {
         abort_if(Gate::denies('session_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $session->load('next_session');
+        $session->load('next_session', 'landing_page');
 
         return view('frontend.sessions.show', compact('session'));
     }

@@ -212,6 +212,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 51,
+                'title' => 'schedule_create',
+            ],
+            [
+                'id'    => 52,
+                'title' => 'schedule_edit',
+            ],
+            [
+                'id'    => 53,
+                'title' => 'schedule_show',
+            ],
+            [
+                'id'    => 54,
+                'title' => 'schedule_delete',
+            ],
+            [
+                'id'    => 55,
+                'title' => 'schedule_access',
+            ],
+            [
+                'id'    => 56,
                 'title' => 'profile_password_edit',
             ],
         ];

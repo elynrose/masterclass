@@ -30,6 +30,18 @@ class Session extends Model implements HasMedia
         'deleted_at',
     ];
 
+    public const CADENCE_SELECT = [
+        'single'    => 'Single',
+        'recurring' => 'Recurring',
+    ];
+
+    public const FREQUENCY_SELECT = [
+        'daily'     => 'Daily',
+        'weekly'    => 'Weekly',
+        'bi-Weekly' => 'Bi-Weekly',
+        'Monthly'   => 'Monthly',
+    ];
+
     protected $fillable = [
         'title',
         'excerpt',
@@ -38,8 +50,11 @@ class Session extends Model implements HasMedia
         'zoom_link',
         'date',
         'time',
+        'cadence',
+        'frequency',
         'duration',
         'next_session_id',
+        'landing_page_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -91,5 +106,10 @@ class Session extends Model implements HasMedia
     public function next_session()
     {
         return $this->belongsTo(self::class, 'next_session_id');
+    }
+
+    public function landing_page()
+    {
+        return $this->belongsTo(LandingPage::class, 'landing_page_id');
     }
 }

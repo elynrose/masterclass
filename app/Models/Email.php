@@ -26,8 +26,9 @@ class Email extends Model implements HasMedia
     protected $fillable = [
         'subject',
         'body',
-        'ordering',
         'session_id',
+        'ordering',
+        'landing_page_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -48,6 +49,11 @@ class Email extends Model implements HasMedia
     public function session()
     {
         return $this->belongsTo(Session::class, 'session_id');
+    }
+
+    public function landing_page()
+    {
+        return $this->belongsTo(LandingPage::class, 'landing_page_id');
     }
 
     public function created_by()
