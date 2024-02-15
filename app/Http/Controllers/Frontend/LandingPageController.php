@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyLandingPageRequest;
 use App\Http\Requests\StoreLandingPageRequest;
 use App\Http\Requests\UpdateLandingPageRequest;
 use App\Models\LandingPage;
+use App\Models\Session;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -22,6 +23,7 @@ class LandingPageController extends Controller
         abort_if(Gate::denies('landing_page_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $landingPages = LandingPage::with(['created_by', 'media'])->get();
+
 
         return view('frontend.landingPages.index', compact('landingPages'));
     }
@@ -110,8 +112,10 @@ class LandingPageController extends Controller
         abort_if(Gate::denies('landing_page_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $landingPage->load('created_by');
+        $sessions = Session::with(['next_session', 'media'])->where('id', $landingPage->id)->get();
 
-        return view('frontend.landingPages.show', compact('landingPage'));
+
+        return view('frontend.landingPages.show', compact('landingPage', 'sessions'));
     }
 
     public function destroy(LandingPage $landingPage)
