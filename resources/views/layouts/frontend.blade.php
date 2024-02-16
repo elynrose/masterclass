@@ -1,204 +1,116 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
+<!DOCTYPE html>
+<html  >
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Site made with Mobirise Website Builder v5.9.13, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v5.9.13, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">
+  <meta name="description" content="">
+  
+  
+  <title>Home</title>
+  <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="/assets/web//assets/gdpr-plugin/gdpr-styles.css">
+  <link rel="stylesheet" href="/assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="/assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="/assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800,300i,400i,500i,600i,700i,800i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800,300i,400i,500i,600i,700i,800i&display=swap"></noscript>
+  <link rel="preload" as="style" href="/assets/mobirise/css/mbr-additional.css?v=Cpu0nt"><link rel="stylesheet" href="/assets/mobirise/css/mbr-additional.css?v=Cpu0nt" type="text/css">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+  
+  
+  
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    @yield('styles')
 </head>
-
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        @guest
-                        @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('frontend.home') }}">
-                                    {{ __('Dashboard') }}
-                                </a>
-                            </li>
-                        @endguest
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if(Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                                    <a class="dropdown-item" href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
-
-                                    @can('user_management_access')
-                                        <a class="dropdown-item disabled" href="#">
-                                            {{ trans('cruds.userManagement.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('permission_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.permissions.index') }}">
-                                            {{ trans('cruds.permission.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('role_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.roles.index') }}">
-                                            {{ trans('cruds.role.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('user_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.users.index') }}">
-                                            {{ trans('cruds.user.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('landing_page_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.landing-pages.index') }}">
-                                            {{ trans('cruds.landingPage.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('subscriber_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.subscribers.index') }}">
-                                            {{ trans('cruds.subscriber.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('session_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.sessions.index') }}">
-                                            {{ trans('cruds.session.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('attendee_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.attendees.index') }}">
-                                            {{ trans('cruds.attendee.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('email_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.emails.index') }}">
-                                            {{ trans('cruds.email.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('user_alert_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.user-alerts.index') }}">
-                                            {{ trans('cruds.userAlert.title') }}
-                                        </a>
-                                    @endcan
-                                    @can('payment_access')
-                                        <a class="dropdown-item" href="{{ route('frontend.payments.index') }}">
-                                            {{ trans('cruds.payment.title') }}
-                                        </a>
-                                    @endcan
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+  
+  <section data-bs-version="5.1" class="menu menu2 cid-sFCw1qGFAI" once="menu" id="menu2-23">
+    
+    <nav class="navbar navbar-dropdown navbar-expand-lg">
+        <div class="container">
+            <div class="navbar-brand">
+                <span class="navbar-logo">
+                    <a href="https://mobiri.se">
+                        <img src="/assets/images/logo.png" alt="Mobirise Website Builder" style="height: 3rem;">
+                    </a>
+                </span>
+                <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-7" href="https://mobiri.se">Finance Trading Company</a></span>
             </div>
-        </nav>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true"><li class="nav-item"><a class="nav-link link text-white display-4" href="#top">Home</a></li><li class="nav-item dropdown"><a class="nav-link link dropdown-toggle text-white display-4" href="index.html#features1-1i" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Features</a><div class="dropdown-menu" data-bs-popper="none" aria-labelledby="dropdown-940"><a class="dropdown-item text-white display-4" href="index.html#features1-1i">New Item</a></div></li>
+                    <li class="nav-item"><a class="nav-link link text-white display-4" href="index.html#header14-1j">About</a></li>
+                    <li class="nav-item"><a class="nav-link link text-white display-4" href="index.html#content4-1q">Pricing</a>
+                    </li><li class="nav-item dropdown"><a class="nav-link link dropdown-toggle text-white display-4" href="index.html#contacts2-1r" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Contacts</a><div class="dropdown-menu" data-bs-popper="none" aria-labelledby="dropdown-663"><a class="dropdown-item text-white display-4" href="index.html#contacts2-1r">New Item</a></div></li></ul>
+                
+                <div class="navbar-buttons mbr-section-btn"><a class="btn btn-primary display-4" href="https://mobiri.se">
+                        Get Started</a></div>
+            </div>
+        </div>
+    </nav>
+</section>
 
-        <main class="py-4">
-            @if(session('message'))
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            @if($errors->count() > 0)
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger">
-                                <ul class="list-unstyled mb-0">
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            @yield('content')
-        </main>
+@yield('content')
+
+<section data-bs-version="5.1" class="footer3 cid-sFCygHrmNf" once="footers" id="footer3-24">
+
+    
+
+    
+
+    <div class="container">
+        <div class="row align-center mbr-white">
+            <div class="row row-links">
+                <ul class="foot-menu">
+                    
+                    
+                    
+                    
+                    
+                <li class="foot-menu-item mbr-fonts-style display-7"><a href="#top" class="text-white">Home</a></li><li class="foot-menu-item mbr-fonts-style display-7"><a href="index.html#features1-1i" class="text-white">Features</a></li><li class="foot-menu-item mbr-fonts-style display-7"><a href="index.html#header14-1j" class="text-white">About</a></li><li class="foot-menu-item mbr-fonts-style display-7"><a href="index.html#content4-1q" class="text-white text-primary">Pricing</a></li><li class="foot-menu-item mbr-fonts-style display-7"><a href="index.html#team1-1o" class="text-white">Teams</a></li><li class="foot-menu-item mbr-fonts-style display-7"><a href="index.html#contacts4-21" class="text-white">Contacts</a></li></ul>
+            </div>
+            <div class="row social-row">
+                <div class="social-list align-right pb-2">
+                    
+                    
+                    
+                    
+                    
+                    
+                <div class="soc-item">
+                        <a href="https://twitter.com/mobirise" target="_blank">
+                            <span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social"></span>
+                        </a>
+                    </div><div class="soc-item">
+                        <a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
+                            <span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social"></span>
+                        </a>
+                    </div></div>
+            </div>
+            <div class="row row-copirayt">
+                <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-7">
+                    © Copyright 2025 Mobirise. All Rights Reserved.
+                </p>
+            </div>
+        </div>
     </div>
+</section><section class="display-7" style="padding: 0;align-items: center;justify-content: center;flex-wrap: wrap;    align-content: center;display: flex;position: relative;height: 4rem;"><a href="https://mobiri.se/76335" style="flex: 1 1;height: 4rem;position: absolute;width: 100%;z-index: 1;"><img alt="" style="height: 4rem;" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></a><p style="margin: 0;text-align: center;" class="display-7">&#8204;</p><a style="z-index:1" href="https://mobirise.com/builder/ai-website-generator.html">AI Website Generator</a></section><script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>  <script src="/assets/web//assets/cookies-alert-plugin/cookies-alert-core.js"></script>  <script src="/assets/web//assets/cookies-alert-plugin/cookies-alert-script.js"></script>  <script src="/assets/smoothscroll/smooth-scroll.js"></script>  <script src="/assets/ytplayer/index.js"></script>  <script src="/assets/dropdown/js/navbar-dropdown.js"></script>  <script src="/assets/theme/js/script.js"></script>  <script src="/assets/formoid/formoid.min.js"></script>  
+  
+  
+<input name="cookieData" type="hidden" data-cookie-cookiesAlertType='false' data-cookie-customDialogSelector='null' data-cookie-colorText='#424a4d' data-cookie-colorBg='rgb(255, 255, 255)' data-cookie-opacityOverlay='0' data-cookie-bgOpacity='100' data-cookie-textButton='GOT IT' data-cookie-rejectText='REJECT' data-cookie-colorButton='#6592e6' data-cookie-rejectColor='#ffffff' data-cookie-colorLink='#424a4d' data-cookie-underlineLink='true' data-cookie-text="We use cookies to give you the best experience. Read our <a href='privacy.html'>cookie policy</a>.">
+   <div id="scrollToTop" class="scrollToTop mbr-arrow-up"><a style="text-align: center;"><i class="mbr-arrow-up-icon mbr-arrow-up-icon-cm cm-icon cm-icon-smallarrow-up"></i></a></div>
+  
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-<script src="{{ asset('js/main.js') }}"></script>
-@yield('scripts')
-
 </html>
